@@ -9,14 +9,14 @@ import Workout from './models/Workout';
 const app = express();
 const port = process.env.PORT ? Number(process.env.PORT) : 8000;
 const codespaceName = process.env.CODESPACE_NAME;
-const apiHost = codespaceName ? `${codespaceName}-8000.githubpreview.dev` : 'localhost';
+const apiHost = codespaceName ? `${codespaceName}-8000.app.github.dev` : 'localhost';
 const apiProtocol = codespaceName ? 'https' : 'http';
-const apiUrl = `${apiProtocol}://${apiHost}`;
+const apiBaseUrl = `${apiProtocol}://${apiHost}`;
 
 app.use(express.json());
 
 app.get('/', (_req, res) => {
-  res.send({ status: 'OctoFit Tracker backend is running.', apiUrl });
+  res.send({ status: 'OctoFit Tracker backend is running.', apiBaseUrl });
 });
 
 app.get('/api/users', async (_req, res) => {
@@ -48,7 +48,7 @@ connectDatabase()
   .then(() => {
     console.log('Connected to MongoDB at', getDatabaseUri());
     app.listen(port, '0.0.0.0', () => {
-      console.log(`Server listening on ${apiProtocol}://${apiHost}`);
+      console.log(`Server listening on ${apiBaseUrl}`);
       console.log(`Local port available at http://localhost:${port}`);
     });
   })
