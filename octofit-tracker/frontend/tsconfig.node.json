@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "composite": true,
     "types": ["node"]
   },
   "include": ["vite.config.ts"]
