@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
 export default function Teams() {
-  const { fetchJson, apiBaseUrl } = useApi('teams');
+  const { fetchJson, apiBaseUrl } = useApi('/api/teams/');
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {

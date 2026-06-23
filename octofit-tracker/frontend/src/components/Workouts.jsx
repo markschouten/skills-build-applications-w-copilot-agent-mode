@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
 export default function Workouts() {
-  const { fetchJson, apiBaseUrl } = useApi('workouts');
+  const { fetchJson, apiBaseUrl } = useApi('/api/workouts/');
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {

@@ -2,16 +2,27 @@ import { useCallback } from 'react';
 
 const buildApiBaseUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+  // Safe Codespaces-hosted base when available
   if (codespaceName) {
-    return `https://${codespaceName}-8000.app.github.dev/api`;
+    return `https://${codespaceName}-8000.app.github.dev`;
   }
 
-  return 'http://localhost:8000/api';
+  // Local development fallback
+  return 'http://localhost:8000';
 };
 
 export default function useApi(resource) {
   const apiBaseUrl = buildApiBaseUrl();
-  const url = `${apiBaseUrl}/${resource}`;
+  // Ensure single-slash joining and include trailing slash per API expectations
+  const normalizedBase = apiBaseUrl.replace(/\/$/, '');
+  // Allow callers to pass either a bare resource name ("activities")
+  // or a full API path ("/api/activities/"). Normalize to a single
+  // final URL under the base (which does not include /api).
+  let path = String(resource || '').replace(/^\/+|\/+$/g, '');
+  if (!/^api\//i.test(path)) {
+    path = `api/${path}`;
+  }
+  const url = `${normalizedBase}/${path}/`;
 
   const fetchJson = useCallback(async () => {
     try {
@@ -24,7 +35,7 @@ export default function useApi(resource) {
   }, [url]);
 
   return {
-    apiBaseUrl,
+    apiBaseUrl: `${normalizedBase}/api/`,
     url,
     fetchJson,
   };

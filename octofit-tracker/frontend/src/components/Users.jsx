@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
 export default function Users() {
-  const { fetchJson, apiBaseUrl } = useApi('users');
+  const { fetchJson, apiBaseUrl } = useApi('/api/users/');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {

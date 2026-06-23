@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
 export default function Leaderboard() {
-  const { fetchJson, apiBaseUrl } = useApi('leaderboard');
+  const { fetchJson, apiBaseUrl } = useApi('/api/leaderboard/');
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
