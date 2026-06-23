@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
+// API endpoint pattern: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts/
 export default function Workouts() {
   const { fetchJson, apiBaseUrl } = useApi('/api/workouts/');
   const [workouts, setWorkouts] = useState([]);

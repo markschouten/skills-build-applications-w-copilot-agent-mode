@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
+// API endpoint pattern: https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users/
 export default function Users() {
   const { fetchJson, apiBaseUrl } = useApi('/api/users/');
   const [users, setUsers] = useState([]);
