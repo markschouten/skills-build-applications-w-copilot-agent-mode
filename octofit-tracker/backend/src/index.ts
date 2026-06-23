@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import { connectDatabase, getDatabaseUri } from './config/database';
 import User from './models/User';
 import Team from './models/Team';
 import Activity from './models/Activity';
@@ -12,7 +12,6 @@ const codespaceName = process.env.CODESPACE_NAME;
 const apiHost = codespaceName ? `${codespaceName}-8000.githubpreview.dev` : 'localhost';
 const apiProtocol = codespaceName ? 'https' : 'http';
 const apiUrl = `${apiProtocol}://${apiHost}`;
-const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 
 app.use(express.json());
 
@@ -45,10 +44,9 @@ app.get('/api/workouts', async (_req, res) => {
   res.json({ workouts });
 });
 
-mongoose
-  .connect(mongoUri)
+connectDatabase()
   .then(() => {
-    console.log('Connected to MongoDB at', mongoUri);
+    console.log('Connected to MongoDB at', getDatabaseUri());
     app.listen(port, '0.0.0.0', () => {
       console.log(`Server listening on ${apiProtocol}://${apiHost}`);
       console.log(`Local port available at http://localhost:${port}`);
